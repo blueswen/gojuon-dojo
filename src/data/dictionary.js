@@ -95,7 +95,7 @@ const fullDictionary = {
     ヲ: "wo",
     ン: "n",
   },
-  dakuten: {
+  hiragana_dakuten: {
     が: "ga",
     ぎ: "gi",
     ぐ: "gu",
@@ -117,15 +117,43 @@ const fullDictionary = {
     べ: "be",
     ぼ: "bo",
   },
-  handakuon: {
-    // Handakuon
+  katakana_dakuten: {
+    ガ: "ga",
+    ギ: "gi",
+    グ: "gu",
+    ゲ: "ge",
+    ゴ: "go",
+    ザ: "za",
+    ジ: "ji",
+    ズ: "zu",
+    ゼ: "ze",
+    ゾ: "zo",
+    ダ: "da",
+    ヂ: "ji",
+    ヅ: "zu",
+    デ: "de",
+    ド: "do",
+    バ: "ba",
+    ビ: "bi",
+    ブ: "bu",
+    ベ: "be",
+    ボ: "bo",
+  },
+  hiragana_handakuon: {
     ぱ: "pa",
     ぴ: "pi",
     ぷ: "pu",
     ぺ: "pe",
     ぽ: "po",
   },
-  yoon: {
+  katakana_handakuon: {
+    パ: "pa",
+    ピ: "pi",
+    プ: "pu",
+    ペ: "pe",
+    ポ: "po",
+  },
+  hiragana_yoon: {
     きゃ: "kya",
     きゅ: "kyu",
     きょ: "kyo",
@@ -148,6 +176,57 @@ const fullDictionary = {
     りゅ: "ryu",
     りょ: "ryo",
   },
+  hiragana_dakuten_yoon: {
+    ぎゃ: "gya",
+    ぎゅ: "gyu",
+    ぎょ: "gyo",
+    じゃ: "ja",
+    じゅ: "ju",
+    じょ: "jo",
+    びゃ: "bya",
+    びゅ: "byu",
+    びょ: "byo",
+    ぴゃ: "pya",
+    ぴゅ: "pyu",
+    ぴょ: "pyo",
+  },
+  katakana_yoon: {
+    キャ: "kya",
+    キュ: "kyu",
+    キョ: "kyo",
+    シャ: "sha",
+    シュ: "shu",
+    ショ: "sho",
+    チャ: "cha",
+    チュ: "chu",
+    チョ: "cho",
+    ニャ: "nya",
+    ニュ: "nyu",
+    ニョ: "nyo",
+    ヒャ: "hya",
+    ヒュ: "hyu",
+    ヒョ: "hyo",
+    ミャ: "mya",
+    ミュ: "myu",
+    ミョ: "myo",
+    リャ: "rya",
+    リュ: "ryu",
+    リョ: "ryo",
+  },
+  katakana_dakuten_yoon: {
+    ギャ: "gya",
+    ギュ: "gyu",
+    ギョ: "gyo",
+    ジャ: "ja",
+    ジュ: "ju",
+    ジョ: "jo",
+    ビャ: "bya",
+    ビュ: "byu",
+    ビョ: "byo",
+    ピャ: "pya",
+    ピュ: "pyu",
+    ピョ: "pyo",
+  },
   sokuon: {
     // Sokuon
     っ: "tsu",
@@ -163,17 +242,29 @@ const dictionaryMap = {
     name: "片假名",
     dictionary: fullDictionary.katakana,
   },
-  dakuten: {
-    name: "濁音",
-    dictionary: fullDictionary.dakuten,
+  hiragana_dakuten: {
+    name: "平假名濁音",
+    dictionary: fullDictionary.hiragana_dakuten,
   },
-  handakuon: {
-    name: "半濁音",
-    dictionary: fullDictionary.handakuon,
+  hiragana_handakuon: {
+    name: "平假名半濁音",
+    dictionary: fullDictionary.hiragana_handakuon,
   },
-  yoon: {
-    name: "拗音",
-    dictionary: fullDictionary.yoon,
+  katakana_dakuten: {
+    name: "平假名濁音",
+    dictionary: fullDictionary.katakana_dakuten,
+  },
+  katakana_handakuon: {
+    name: "平假名半濁音",
+    dictionary: fullDictionary.katakana_handakuon,
+  },
+  hiragana_yoon: {
+    name: "片假名拗音",
+    dictionary: fullDictionary.hiragana_yoon,
+  },
+  katakana_yoon: {
+    name: "片假名拗音",
+    dictionary: fullDictionary.katakana_yoon,
   },
   sokuon: {
     name: "促音",
@@ -181,4 +272,50 @@ const dictionaryMap = {
   },
 };
 
-export { fullDictionary, dictionaryMap };
+const dictionaryList = [
+  { key: "hiragana", name: "平假名", words: fullDictionary.hiragana },
+  { key: "katakana", name: "片假名", words: fullDictionary.katakana },
+  {
+    key: "hiragana_dakuten",
+    name: "平假名濁音",
+    words: fullDictionary.hiragana_dakuten,
+  },
+  {
+    key: "katakana_dakuten",
+    name: "片假名濁音",
+    words: fullDictionary.katakana_dakuten,
+  },
+  {
+    key: "hiragana_handakuon",
+    name: "平假名半濁音",
+    words: fullDictionary.hiragana_handakuon,
+  },
+  {
+    key: "katakana_handakuon",
+    name: "片假名半濁音",
+    words: fullDictionary.katakana_handakuon,
+  },
+  {
+    key: "hiragana_yoon",
+    name: "平假名拗音",
+    words: fullDictionary.hiragana_yoon,
+  },
+  {
+    key: "katakana_yoon",
+    name: "片假名拗音",
+    words: fullDictionary.katakana_yoon,
+  },
+  {
+    key: "hiragana_dakuten_yoon",
+    name: "平假名濁音拗音",
+    words: fullDictionary.hiragana_dakuten_yoon,
+  },
+  {
+    key: "katakana_dakuten_yoon",
+    name: "片假名濁音拗音",
+    words: fullDictionary.katakana_dakuten_yoon,
+  },
+  { key: "sokuon", name: "促音", words: fullDictionary.sokuon },
+];
+
+export { fullDictionary, dictionaryMap, dictionaryList };

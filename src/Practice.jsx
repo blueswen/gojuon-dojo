@@ -110,7 +110,15 @@ export default function HiraganaPractice() {
 
   // 處理字典選擇變更
   const handleDictionaryChange = (values) => {
-    setSelectedDictionaries(values);
+    if (values.includes("selectAll")) {
+      if (selectedDictionaries.length === Object.keys(dictionaryMap).length) {
+        setSelectedDictionaries([]);
+      } else {
+        setSelectedDictionaries(Object.keys(dictionaryMap));
+      }
+    } else {
+      setSelectedDictionaries(values);
+    }
   };
 
   // 處理設定應用
@@ -184,6 +192,9 @@ export default function HiraganaPractice() {
           value={selectedDictionaries}
           onValueChange={handleDictionaryChange}
         >
+          <ToggleGroupItem key="selectAll" value="selectAll">
+            全選
+          </ToggleGroupItem>
           {Object.keys(dictionaryMap).map((key) => (
             <ToggleGroupItem key={key} value={key}>
               {dictionaryMap[key].name}
