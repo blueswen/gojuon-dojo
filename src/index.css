@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+.top-nav {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.main-content {
+  max-width: 1280px;
+  margin: auto 0; /* Adjust margin-top to account for the fixed top nav */
+  padding: 2rem;
+  text-align: center;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -98,6 +116,10 @@ button:focus-visible {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --scrollbar-bg: #ffffff;
+    --scrollbar-thumb: #d1d5db;
+    --scrollbar-thumb-hover: #e0e7ff;
+    --scrollbar-border: #d1d5db;
   }
   .dark {
     --background: 222.2 84% 4.9%;
@@ -124,7 +146,38 @@ button:focus-visible {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --scrollbar-bg: #2a2a2a;
+    --scrollbar-thumb: #525252;
+    --scrollbar-thumb-hover: #3d3d3d;
+    --scrollbar-border: #525252;
   }
+}
+
+/* WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg); /* Background of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb); /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+  border: 2px solid var(--scrollbar-border); /* Border for the scrollbar thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(
+    --scrollbar-thumb-hover
+  ); /* Color of the scrollbar thumb on hover */
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin; /* Width of the scrollbar */
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg); /* Color of the scrollbar thumb and track */
 }
 
 @layer base {

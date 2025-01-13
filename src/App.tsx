@@ -13,23 +13,27 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <h1>五十音打字練習</h1>
-      <ModeToggle />
-      <Practice />
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {dictionaryList.map((dictionary, index) => (
-          <div
-            key={index}
-            style={{
-              flex: "1 1 50%",
-              boxSizing: "border-box",
-              padding: "10px",
-            }}
-          >
-            <DictionaryTable dictionary={dictionary} />
-          </div>
-        ))}
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <div className="top-nav">
+        <ModeToggle />
+      </div>
+      <div className="main-content">
+        <h1>五十音羅馬字練習</h1>
+        <Practice />
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {dictionaryList.map((dictionary, index) => (
+            <div
+              key={index}
+              style={{
+                flex: "1 1 50%",
+                boxSizing: "border-box",
+                padding: "10px",
+              }}
+            >
+              <DictionaryTable dictionary={dictionary} />
+            </div>
+          ))}
+        </div>
       </div>
     </ThemeProvider>
   );

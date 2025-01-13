@@ -36,6 +36,12 @@ function speakJapanese(text, voice = null) {
   speechSynthesis.speak(utterance);
 }
 
+const formatTime = (timeInSeconds) => {
+  const minutes = Math.floor(timeInSeconds / 60);
+  const seconds = timeInSeconds % 60;
+  return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+};
+
 export default function HiraganaPractice() {
   // State to keep track of selected dictionaries
   const [selectedDictionaries, setSelectedDictionaries] = useState([
@@ -54,6 +60,10 @@ export default function HiraganaPractice() {
   const [isCorrect, setIsCorrect] = useState(Array(charAmount).fill(false));
   // 追蹤當前正在輸入哪個 index
   const [currentIndex, setCurrentIndex] = useState(0);
+  // Timer state
+  const [timer, setTimer] = useState(0);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const timerRef = useRef(null);
 
   // 方便自動聚焦：refs 用來存每個 input DOM
   const inputRefs = useRef([]);
@@ -68,8 +78,24 @@ export default function HiraganaPractice() {
     inputRefs.current[currentIndex]?.focus();
   }, [currentIndex]);
 
+  useEffect(() => {
+    if (isTimerRunning) {
+      timerRef.current = setInterval(() => {
+        setTimer((prevTimer) => prevTimer + 1);
+      }, 1000);
+    } else {
+      clearInterval(timerRef.current);
+    }
+    return () => clearInterval(timerRef.current);
+  }, [isTimerRunning]);
+
   // 處理輸入時的檢查
   const handleChange = (value, index) => {
+    // Start the timer if it's not already running
+    if (!isTimerRunning) {
+      setIsTimerRunning(true);
+    }
+
     // 先更新輸入內容
     const newInputs = [...inputs];
     newInputs[index] = value;
@@ -91,6 +117,10 @@ export default function HiraganaPractice() {
       if (index < chars.length - 1) {
         setCurrentIndex(index + 1);
       }
+      // Stop the timer if all inputs are correct
+      if (newIsCorrect.every(Boolean)) {
+        setIsTimerRunning(false);
+      }
     }
   };
 
@@ -106,13 +136,15 @@ export default function HiraganaPractice() {
     setInputs(Array(charAmount).fill(""));
     setIsCorrect(Array(charAmount).fill(false));
     setCurrentIndex(0);
+    setTimer(0);
+    setIsTimerRunning(false);
   };
 
   // 處理字典選擇變更
   const handleDictionaryChange = (values) => {
     if (values.includes("selectAll")) {
       if (selectedDictionaries.length === Object.keys(dictionaryMap).length) {
-        setSelectedDictionaries([]);
+        setSelectedDictionaries(["hiragana"]);
       } else {
         setSelectedDictionaries(Object.keys(dictionaryMap));
       }
@@ -128,13 +160,18 @@ export default function HiraganaPractice() {
     setInputs(Array(charAmount).fill(""));
     setIsCorrect(Array(charAmount).fill(false));
     setCurrentIndex(0);
+    setTimer(0);
+    setIsTimerRunning(false);
   };
 
   return (
     <div style={{ margin: "0 auto" }}>
-      <p>
-        進度：{correctCount} / {totalCount} {isAllDone && "（完成！）"}
-      </p>
+      <div className="m-5">
+        <p>
+          進度：{correctCount} / {totalCount}
+        </p>
+        <p>時間：{formatTime(timer)}</p>
+      </div>
 
       <div
         style={{
@@ -178,12 +215,12 @@ export default function HiraganaPractice() {
       </div>
 
       {isAllDone && (
-        <div style={{ marginTop: 20 }}>
+        <div className="m-5">
           <h2>恭喜完成！</h2>
           <Button onClick={handleRestart}>重新開始</Button>
         </div>
       )}
-      <div className="grid auto-rows-min gap-4 mt-2 mb-2 p-6 md:grid-cols-1 border border-500 rounded-xl">
+      <div className="grid auto-rows-min gap-4 my-10 p-6 md:grid-cols-1 border border-500 rounded-xl">
         <h2>設定區</h2>
         {/* 選擇要練習哪些 Dictionary */}
         <ToggleGroup
@@ -201,8 +238,8 @@ export default function HiraganaPractice() {
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
-        <div className="grid w-full max-w-sm items-center gap-1.5 grid-cols-4 text-left">
-          <div>
+        <div className="grid grid-cols-3 place-items-center m-4">
+          <div className="col-start-2">
             <Label htmlFor="amount">練習數量</Label>
             <Input
               type="number"
@@ -212,10 +249,13 @@ export default function HiraganaPractice() {
             />
           </div>
         </div>
+
         {/* 應用設定按鈕 */}
-        <Button className="m-4" onClick={handleApplySettings}>
-          應用設定
-        </Button>
+        <div className="flex justify-center">
+          <Button className="m-4" onClick={handleApplySettings}>
+            應用設定
+          </Button>
+        </div>
       </div>
     </div>
   );

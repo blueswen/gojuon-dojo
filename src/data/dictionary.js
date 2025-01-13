@@ -266,10 +266,10 @@ const dictionaryMap = {
     name: "片假名拗音",
     dictionary: fullDictionary.katakana_yoon,
   },
-  sokuon: {
-    name: "促音",
-    dictionary: fullDictionary.sokuon,
-  },
+  // sokuon: {
+  //   name: "促音",
+  //   dictionary: fullDictionary.sokuon,
+  // },
 };
 
 const dictionaryList = [
@@ -315,7 +315,7 @@ const dictionaryList = [
     name: "片假名濁音拗音",
     words: fullDictionary.katakana_dakuten_yoon,
   },
-  { key: "sokuon", name: "促音", words: fullDictionary.sokuon },
+  // { key: "sokuon", name: "促音", words: fullDictionary.sokuon },
 ];
 
 export { fullDictionary, dictionaryMap, dictionaryList };
