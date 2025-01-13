@@ -1,50 +1,20 @@
-# React + TypeScript + Vite
+# 五十音羅馬字練習
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+專為學習日文五十音設計的網頁應用，透過羅馬字對應假名的練習，幫助快速熟記日文五十音。
 
-Currently, two official plugins are available:
+功能：
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. 多樣練習模式：提供多種練習選項，包括平假名、片假名、濁音、半濁音、拗音，以及混合練習。
+2. 即時發音提示：每次正確輸入後，自動播放對應的發音，強化聽覺記憶，提升學習效率。
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- React
+- TypeScript
+- Vite
+- [Shadcn/ui](https://ui.shadcn.com/)
 
-- Configure the top-level `parserOptions` property like this:
+## Cooperator
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
-```
+- ChatGPT
+- Copilot
