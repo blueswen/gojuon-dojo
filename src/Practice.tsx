@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
-import { Label } from "@/components/ui/Label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { dictionaryMap } from "@/data/dictionary";
 
 // 隨機取得 n 個假名
-function getRandomChars(dictionary, n = 5) {
+function getRandomChars(dictionary: Record<string, string>, n = 5): string[] {
   const keys = Object.keys(dictionary);
   const result = [];
   for (let i = 0; i < n; i++) {
@@ -17,18 +17,23 @@ function getRandomChars(dictionary, n = 5) {
 }
 
 // 合併多個字典
-function mergeDictionaries(selectedDictionaries) {
-  return selectedDictionaries.reduce((acc, key) => {
-    return { ...acc, ...dictionaryMap[key].dictionary };
-  }, {});
+function mergeDictionaries(
+  selectedDictionaries: string[],
+): Record<string, string> {
+  return selectedDictionaries.reduce(
+    (acc: Record<string, string>, key: string) => {
+      return { ...acc, ...dictionaryMap[key].dictionary };
+    },
+    {} as Record<string, string>,
+  );
 }
 
-function speakJapanese(text, voice = null) {
+function speakJapanese(text: string, voice: SpeechSynthesisVoice | undefined) {
   // 建立一個語音物件
   const utterance = new SpeechSynthesisUtterance(text);
   // 設定語言：日文通常用 ja-JP
   utterance.lang = "ja-JP";
-  utterance.rate = 0.8;
+  utterance.rate = 1;
   if (voice) {
     utterance.voice = voice;
   }
@@ -36,7 +41,7 @@ function speakJapanese(text, voice = null) {
   speechSynthesis.speak(utterance);
 }
 
-const formatTime = (timeInSeconds) => {
+const formatTime = (timeInSeconds: number) => {
   const minutes = Math.floor(timeInSeconds / 60);
   const seconds = timeInSeconds % 60;
   return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
@@ -63,15 +68,17 @@ export default function Practice() {
   // Timer state
   const [timer, setTimer] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const timerRef = useRef(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   // 方便自動聚焦：refs 用來存每個 input DOM
-  const inputRefs = useRef([]);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   // 確保有 Google 日本語的語音, if not, set to null
   const synth = window.speechSynthesis;
   const voice =
-    synth.getVoices().find((v) => v.name === "Google 日本語") || null;
+    synth.getVoices().find((v) => v.name === "Google 日本語") ||
+    synth.getVoices().find((v) => v.lang === "ja-JP") ||
+    undefined;
 
   useEffect(() => {
     // 每次轉到下個字時，自動 focus 到該字的 input
@@ -83,14 +90,19 @@ export default function Practice() {
       timerRef.current = setInterval(() => {
         setTimer((prevTimer) => prevTimer + 1);
       }, 1000);
-    } else {
+    } else if (timerRef.current) {
       clearInterval(timerRef.current);
+      timerRef.current = null;
     }
-    return () => clearInterval(timerRef.current);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
   }, [isTimerRunning]);
 
   // 處理輸入時的檢查
-  const handleChange = (value, index) => {
+  const handleChange = (value: string, index: number) => {
     // Start the timer if it's not already running
     if (!isTimerRunning) {
       setIsTimerRunning(true);
@@ -111,7 +123,9 @@ export default function Practice() {
         newIsCorrect[index] = true;
         setIsCorrect(newIsCorrect);
         // 說出正確的假名
-        speakJapanese(chars[index], voice);
+        if (typeof chars[index] === "string") {
+          speakJapanese(chars[index], voice);
+        }
       }
       // 移到下一個字
       if (index < chars.length - 1) {
@@ -141,7 +155,7 @@ export default function Practice() {
   };
 
   // 處理字典選擇變更
-  const handleDictionaryChange = (values) => {
+  const handleDictionaryChange = (values: string[]) => {
     if (values.includes("selectAll")) {
       if (selectedDictionaries.length === Object.keys(dictionaryMap).length) {
         setSelectedDictionaries(["hiragana"]);
@@ -193,7 +207,9 @@ export default function Practice() {
             >
               <div style={{ width: 60 }}>{char}</div>
               <Input
-                ref={(el) => (inputRefs.current[i] = el)}
+                ref={(el) => {
+                  if (el) inputRefs.current[i] = el;
+                }}
                 type="text"
                 value={inputs[i]}
                 disabled={isAllDone || i !== currentIndex} // 只允許當前的那一格輸入
