@@ -18,7 +18,7 @@ function App() {
         <ModeToggle />
       </div>
       <div className="main-content">
-        <h1>五十音羅馬字練習</h1>
+        <h1>五十音道場</h1>
         <Practice />
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {dictionaryList.map((dictionary, index) => (
