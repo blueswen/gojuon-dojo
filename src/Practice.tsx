@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/Label";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { fullDictionary, dictionaryMap } from "@/data/dictionary";
+import { dictionaryMap } from "@/data/dictionary";
 
 // 隨機取得 n 個假名
 function getRandomChars(dictionary, n = 5) {
@@ -42,7 +42,7 @@ const formatTime = (timeInSeconds) => {
   return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 };
 
-export default function HiraganaPractice() {
+export default function Practice() {
   // State to keep track of selected dictionaries
   const [selectedDictionaries, setSelectedDictionaries] = useState([
     "hiragana",
@@ -204,7 +204,7 @@ export default function HiraganaPractice() {
                     inputs[i] &&
                     inputs[i] !== practicedDictionary[char] &&
                     !isCorrect[i]
-                      ? "2px solid red"
+                      ? "2px solid #CB4042"
                       : "1px solid #ccc",
                   textAlign: "center",
                 }}
@@ -215,8 +215,8 @@ export default function HiraganaPractice() {
       </div>
 
       {isAllDone && (
-        <div className="m-5">
-          <h2>恭喜完成！</h2>
+        <div className="m-5 text-center">
+          <h2 className="my-3">恭喜完成！</h2>
           <Button onClick={handleRestart}>重新開始</Button>
         </div>
       )}
