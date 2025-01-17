@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://blueswen.github.io/gojuon-dojo" target="_blank">
-    <img width="120" src="./logo.png" alt="五十音道場">
+    <img width="120" src="./public/logo.png" alt="五十音道場">
   </a>
 </p>
 
@@ -13,6 +13,8 @@
 1. **多樣練習模式**：支援平假名、片假名、濁音、半濁音、拗音及混合練習。
 2. **即時發音提示**：輸入正確後自動播放發音，強化聽覺記憶。
 3. **五十音圖**：完整收錄平假名、片假名、濁音、半濁音、拗音，點擊即可聆聽正確發音。
+
+![五十音道場](preview.png)
 
 ## Tech Stack
 
