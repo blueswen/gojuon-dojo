@@ -251,15 +251,15 @@ const dictionaryMap = {
     dictionary: fullDictionary.hiragana_handakuon,
   },
   katakana_dakuten: {
-    name: "平假名濁音",
+    name: "片假名濁音",
     dictionary: fullDictionary.katakana_dakuten,
   },
   katakana_handakuon: {
-    name: "平假名半濁音",
+    name: "片假名半濁音",
     dictionary: fullDictionary.katakana_handakuon,
   },
   hiragana_yoon: {
-    name: "片假名拗音",
+    name: "平假名拗音",
     dictionary: fullDictionary.hiragana_yoon,
   },
   katakana_yoon: {
