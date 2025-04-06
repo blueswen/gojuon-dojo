@@ -11,5 +11,6 @@ export function speakJapanese(
   utterance.rate = options.rate !== undefined ? options.rate : 1; // 速度 (0.1 到 10)
   utterance.pitch = options.pitch !== undefined ? options.pitch : 1; // 音高 (0 到 2)
   // 呼叫瀏覽器的 TTS 播放
+  speechSynthesis.cancel(); // 先取消之前的語音
   speechSynthesis.speak(utterance);
 }

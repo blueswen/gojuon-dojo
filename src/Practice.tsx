@@ -38,6 +38,7 @@ function speakJapanese(text: string, voice: SpeechSynthesisVoice | undefined) {
     utterance.voice = voice;
   }
   // 呼叫瀏覽器的 TTS 播放
+  speechSynthesis.cancel(); // 先取消之前的語音
   speechSynthesis.speak(utterance);
 }
 
